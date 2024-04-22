@@ -67,6 +67,14 @@ public class HotelManager {
         }
         return this.hotelDao.save(hotel);
     }
+    // Belirli bir ID'ye sahip kullanıcıyı silen metod
+    public boolean delete(int id) {
+        if (this.getById(id) == null) {
+            // Eğer kullanıcı ID'si bulunamazsa, silme işlemi yapılmaz
+            return false;
+        }
+        return this.hotelDao.delete(id);
+    }
 
 
 }

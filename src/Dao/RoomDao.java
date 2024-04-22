@@ -49,7 +49,8 @@ public class RoomDao {
         // İlişkili DAO sınıflarını kullanarak ilgili nesneleri set et
         obj.setPencion(this.pencionDao.getById(rs.getInt("pension_id")));
         obj.setSeason(this.seasonDao.getById(rs.getInt("season_id")));
-        obj.setHotel(this.hotelDao.getById(rs.getInt("hotel_id")));
+//        obj.setHotel(this.hotelDao.getById(rs.getInt("hotel_id")));
+        obj.setHotel(this.hotelDao.getById(obj.getHotel_id()));
         return obj;
     }
 

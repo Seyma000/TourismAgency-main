@@ -4,6 +4,7 @@ import Dao.HotelDao;
 import Dao.ReservationDao;
 import Dao.RoomDao;
 import business.*;
+import core.Db;
 import core.Helper;
 import entity.Hotel;
 import entity.Reservation;
@@ -14,6 +15,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 import java.awt.event.*;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -90,8 +93,16 @@ public class EmployeeView extends Layout {
         this.hotelDao = new HotelDao();
         this.roomDao = new RoomDao();
         this.reservationDao = new ReservationDao();
+
+
         loadHotelAddView(null);
         loadPencionTable(null);
+
+        loadHotelTable(null);  ///////////////////////////////////////////////
+        loadSeasonTable(null);
+
+
+
         loadRoomTable(null);
         loadRoomAddComponent();
         loadReservationTable(null);
@@ -157,6 +168,60 @@ public class EmployeeView extends Layout {
             // Sezon tablosunu günceller.
             loadSeasonTable(null);
         });
+
+
+
+        // Belirli bir ID'ye sahip oteli silen metod
+//        public boolean delete(int id) {
+//            if (this.getById(id) == null) {
+//                // Eğer kullanıcı ID'si bulunamazsa, silme işlemi yapılmaz
+//                return false;
+//            }
+//            return this.hotelDao.delete(id);
+//        }
+
+//        public static boolean delete(int id){
+//            String str = "DELETE FROM hotels WHERE id = ?";
+//            try(PreparedStatement pr = Db.getInstance().prepareStatement(str)){
+//                pr.setInt(1,id);
+//                int result = pr.executeUpdate();
+//                return result > 0;
+//            }catch (SQLException e){
+//                e.printStackTrace();
+//                return false;
+//            }
+//        }
+
+
+
+        // "Sil" işlevini içeren bir ActionListener eklenir.****************************************************
+        hotelMenu.add("Otel Sil").addActionListener(e -> {
+
+            // Kullanıcıya emin olup olmadığını soran bir onay penceresi gösterilir.
+            if (Helper.confirm("sure")) {
+
+                // Seçilen kullanıcının ID'si alınır.
+                int selectHotelId = this.getTableSelectedRow(tbl_hotel, 0);
+
+                // Kullanıcı ID'sine göre kullanıcı silinir.
+                if (this.hotelManager.delete(selectHotelId)) {
+
+                    // Başarılı bir şekilde silindiğinde kullanıcıya mesaj gösterilir.
+                    Helper.showMsg("done");
+                    loadHotelTable(null);
+                    loadPencionTable(null);
+                    loadSeasonTable(null);
+                    loadRoomTable(null);
+                    loadReservationTable(null);
+                } else {
+
+                    // Silme işlemi başarısızsa kullanıcıya hata mesajı gösterilir.
+                    Helper.showMsg("error");
+                }
+            }
+        });
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
         this.tbl_hotel.setComponentPopupMenu(hotelMenu);
         loadPencionTable(null);
         loadSeasonTable(null);
@@ -358,6 +423,44 @@ public class EmployeeView extends Layout {
         // Rezervasyon tablosunu güncelliyor.
         loadReservationTable(null);
 
+    }
+
+    public void loadHotelComponent() {
+        // ADD, UPDATE, DELETE HOTEL
+        tableRowSelect(this.tbl_hotel);
+        this.hotelMenu = new JPopupMenu();
+        this.hotelMenu.add("Add New Hotel").addActionListener(e -> {
+            HotelAddView hotelSaveView = new HotelAddView(new Hotel());
+            hotelSaveView.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadHotelTable(null);
+                }
+            });
+        });
+        this.hotelMenu.add("Update Hotel").addActionListener(e -> {
+            int selectedHotelId = this.getTableSelectedRow(tbl_hotel, 0);
+            HotelAddView hotelSaveView = new HotelAddView(this.hotelManager.getById(selectedHotelId));
+            hotelSaveView.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    loadHotelTable(null);
+                }
+            });
+        });
+        this.hotelMenu.add("Delete Hotel").addActionListener(e -> {
+            if (Helper.confirm("sure")) {
+                int selectedHotelId = this.getTableSelectedRow(tbl_hotel, 0);
+                if (this.hotelManager.delete(selectedHotelId)) {
+                    Helper.showMsg("Done");
+                    loadHotelTable(null);
+                    loadPencionTable(null);
+                } else {
+                    Helper.showMsg("Error");
+                }
+            }
+        });
+        this.tbl_hotel.setComponentPopupMenu(this.hotelMenu);
     }
 
     public void loadRoomAddComponent() {
