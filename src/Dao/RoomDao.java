@@ -44,6 +44,7 @@ public class RoomDao {
         obj.setRoom_television(rs.getBoolean("television"));
         obj.setRoom_minibar(rs.getBoolean("minibar"));
         obj.setRoom_game_console(rs.getBoolean("game_console"));
+        obj.setSafe(rs.getBoolean("safe"));
         obj.setRoom_projection(rs.getBoolean("projection"));
 
         // İlişkili DAO sınıflarını kullanarak ilgili nesneleri set et
@@ -70,9 +71,10 @@ public class RoomDao {
                 "television, " +
                 "minibar, " +
                 "game_console, " +
+                "safe, " +
                 "projection " +
                 ")" +
-                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try {
             PreparedStatement pr = this.con.prepareStatement(query);
@@ -88,7 +90,8 @@ public class RoomDao {
             pr.setBoolean(10, room.isRoom_television());
             pr.setBoolean(11, room.isRoom_minibar());
             pr.setBoolean(12, room.isRoom_game_console());
-            pr.setBoolean(13, room.isRoom_projection());
+            pr.setBoolean(13, room.isSafe());
+            pr.setBoolean(14, room.isRoom_projection());
             return pr.executeUpdate() != -1;
         } catch (SQLException e) {
             e.printStackTrace();

@@ -46,6 +46,7 @@ public class RoomManager {
             rowObject[i++] = obj.isRoom_television();
             rowObject[i++] = obj.isRoom_minibar();
             rowObject[i++] = obj.isRoom_game_console();
+            rowObject[i++] = obj.isSafe();
             rowObject[i++] = obj.isRoom_projection();
             roomObjList.add(rowObject);
         }

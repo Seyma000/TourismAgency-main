@@ -5,7 +5,7 @@ This project covers a Java Swing application developed to manage the operations 
 The tourism agency project is an application that provides hotel management, room reservations, customer information and user management. It includes adding hotels, managing rooms, making reservations and updating customer information. Users are created in different roles such as admin and employee, allowing business processes to be managed more effectively. As a result, the tourism agency project provides services by facilitating travel and accommodation processes.
 
 # Project Demo Video
-https://youtu.be/QuybC6NqVU4
+https://youtu.be/Pp9rCfY3RKo
 
 # Features
 ## Hotel Management

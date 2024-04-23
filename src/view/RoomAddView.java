@@ -99,6 +99,7 @@ public class RoomAddView extends Layout {
                 roomNew.setRoom_television(rdb_tv_add.isSelected());
                 roomNew.setRoom_minibar(rdb_minibar_add.isSelected());
                 roomNew.setRoom_game_console(rdb_game_console_add.isSelected());
+                roomNew.setSafe(rdb_case_box_add.isSelected());
                 roomNew.setRoom_projection(rdb_projection_add.isSelected());
 
 

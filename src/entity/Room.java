@@ -15,6 +15,7 @@ public class Room {
     private boolean room_television;
     private boolean room_minibar;
     private boolean room_game_console;
+    private boolean safe;
     private boolean room_projection;
     private Hotel hotel;
     private Season season;
@@ -161,6 +162,13 @@ public class Room {
         this.room_game_console = room_game_console;
     }
 
+    public boolean isSafe() {
+        return safe;
+    }
+
+    public void setSafe(boolean safe) {
+        this.safe = safe;
+    }
 
     public boolean isRoom_projection() {
         return room_projection;
